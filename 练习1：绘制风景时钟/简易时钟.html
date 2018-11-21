@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="cancvs" width="410" height="410"></canvas>
+<script>
+    var img=new Image();
+    img.src="img/1.jpg";
+    function run(){
+        var a=document.querySelector("#cancvs");
+        var cxt= a.getContext("2d");
+        //cxt.clearRect(0,0, a.offsetWidth, a.offsetHeight);
+        //cxt.globalCompositeOperation="source-in";
+        // var g=cxt.createRadialGradient(205,205,0,205,205,200);
+        // g.addColorStop(0,"rgba(100,0,0,.2)");
+        //g.addColorStop(1,"rgba(0,40,100,.8)");
+        cxt.save();
+        cxt.beginPath();
+        cxt.arc(205,205,200,Math.PI*2,false);
+        //cxt.fillStyle=g;
+        cxt.shadowOffsetX=0;
+        cxt.shadowOffsetY=0;
+        cxt.shadowColor="pink";
+        cxt.shadowBlur=3;
+        cxt.strokeStyle="blue";
+        cxt.lineWidth=2;
+        cxt.fill();
+        cxt.closePath();
+        cxt.stroke();
+        cxt.clip();
+        cxt.drawImage(img,10,5,410,410);
+        cxt.restore();
+
+        var color=['peru'];
+        for(var i=0;i<60;i++) {
+            var m="peru";
+           cxt.save();
+            cxt.beginPath();
+            cxt.translate(205, 205);
+            cxt.rotate( Math.PI*6*i/180);
+            if(i%5!==0){
+                cxt.lineWidth = "2";
+                cxt.moveTo(0,-190);
+            }else{
+                cxt.lineWidth = "3";
+                cxt.moveTo(0,-180);
+            }
+            cxt.lineTo(0,-200);
+            cxt.strokeStyle=m;
+            cxt.closePath();
+            cxt.stroke();
+            cxt.restore();
+        }
+        var time=new Date();
+        var h=time.getHours();
+        var m=time.getMinutes();
+        var s=time.getSeconds();
+
+        cxt.save();
+        cxt.beginPath();
+        cxt.shadowOffsetX=0;
+        cxt.shadowOffsetY=0;
+        cxt.shadowColor="rgb(20,0,250)";
+        cxt.shadowBlur=15;
+        cxt.font="14px 微软雅黑";
+        cxt.fillStyle="rgb(90,20,40)";
+        cxt.strokeStyle="red"
+        if(s<9&&m>9){
+            cxt.strokeText(h+":"+m+":0"+s,180,370);
+        }else if(s<9&&m<9){
+            cxt.strokeText(h+":0"+m+":0"+s,180,370);
+        }else if(s>9&&m<9){
+            cxt.strokeText(h+":0"+m+":"+s,180,370);
+        }else if(s>9&&m>9){
+            cxt.strokeText(h+":"+m+":"+s,180,370);
+        }
+        //cxt.fillText("MADE IN CHINA",150,350);
+        cxt.strokeText("MADE IN CHINA",155,355);
+
+        cxt.fill();
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+
+        //时
+        cxt.save();
+        cxt.beginPath();
+        cxt.translate(205, 205);
+        cxt.rotate( Math.PI*(h+m/60)/6);
+        cxt.moveTo(0,0);
+        cxt.lineTo(0,-100);
+        cxt.lineWidth = "5";
+        cxt.strokeStyle="blue";
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+        //分
+        cxt.save();
+        cxt.beginPath();
+        cxt.translate(205, 205);
+        cxt.rotate( Math.PI*m/30);
+        cxt.moveTo(0,0);
+        cxt.lineTo(0,-130);
+        cxt.lineWidth = "3";
+        cxt.strokeStyle="red";
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+        //秒
+        cxt.save();
+        cxt.beginPath();
+        cxt.translate(205, 205);
+        cxt.rotate( Math.PI*(s+time.getMilliseconds()/1000)/30);
+        cxt.moveTo(0,20);
+        cxt.lineTo(0,-160);
+        cxt.lineWidth = "2";
+        cxt.strokeStyle="pink";
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+        //秒，圆点
+        cxt.save();
+        cxt.beginPath();
+        cxt.translate(205, 205);
+        cxt.rotate( Math.PI*(s+time.getMilliseconds()/1000)/30);
+        cxt.arc(0,-140,5,Math.PI*2,false);
+        cxt.strokeStyle="pink";
+        cxt.lineWidth = "2";
+        cxt.fillStyle="red";
+        cxt.fill();
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+        //中心圆点
+        cxt.save();
+        cxt.beginPath();
+        cxt.arc(205,205,5,Math.PI*2,false);
+        cxt.fillStyle="white";
+        cxt.strokeStyle="green";
+        cxt.fill();
+        cxt.closePath();
+        cxt.stroke();
+        cxt.restore();
+
+    }
+    run();
+    setInterval(run,16)
+
+</script>
+</body>
+</html>
